@@ -6,6 +6,12 @@ A minimal, visually layered lock screen theme for [Hyprlock](https://github.com/
 
 ---
 
+## Assets notice
+
+The theme assets (`backgrounds/`, `foreground/`) total ~40 MB. The git repository includes them for convenience, but **if you are cloning just to install, use the [release download](#installation) instead** — the install script pulls only what it needs from the release and is much faster.
+
+---
+
 ## Features
 
 - Large typographic clock (Steelfish Outline)
@@ -33,23 +39,42 @@ A minimal, visually layered lock screen theme for [Hyprlock](https://github.com/
 
 ## Installation
 
-1. Clone the repo:
+### Recommended — install script (downloads from release)
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/tuklu/neZha-Hyprlock-Theme/main/install.sh | bash
+```
+
+This will:
+- Download and extract the latest `assets.tar.xz` and `source.tar.xz` from the GitHub release
+- Install everything under `~/.config/hypr/neZha-Hyprlock-Theme/`
+- Copy the scripts to `~/.config/hypr/scripts/` and make them executable
+- Write `~/.config/hypr/hyprlock.conf` with correct absolute asset paths
+
+### Manual setup
+
+1. Clone the repo (includes all assets, ~40 MB):
    ```sh
    git clone https://github.com/tuklu/neZha-Hyprlock-Theme ~/.config/hypr/neZha-Hyprlock-Theme
    ```
 
-2. Copy or symlink the config:
+2. Copy the scripts and make them executable:
    ```sh
-   cp ~/.config/hypr/neZha-Hyprlock-Theme/hyprlock.conf ~/.config/hypr/hyprlock.conf
-   ```
-
-3. Copy the scripts:
-   ```sh
-   cp ~/.config/hypr/neZha-Hyprlock-Theme/scripts/* ~/.config/hypr/scripts/
+   cp ~/.config/hypr/neZha-Hyprlock-Theme/scripts/*.sh ~/.config/hypr/scripts/
    chmod +x ~/.config/hypr/scripts/*.sh
    ```
 
-4. Adjust background and foreground image paths in `hyprlock.conf` to match your setup.
+3. Write `hyprlock.conf` with absolute asset paths:
+   ```sh
+   THEME=~/.config/hypr/neZha-Hyprlock-Theme
+   sed "s|./assets/|$THEME/assets/|g" "$THEME/hyprlock.conf" > ~/.config/hypr/hyprlock.conf
+   ```
+
+4. *(Optional)* If you are **not** using Omarchy, remove or replace the first line of your new `~/.config/hypr/hyprlock.conf`:
+   ```
+   source = ~/.config/omarchy/current/theme/hyprlock.conf
+   ```
+   Replace the `$color`, `$outer_color`, `$inner_color`, and `$font_color` variables with literal `rgba(...)` values from your theme.
 
 ---
 

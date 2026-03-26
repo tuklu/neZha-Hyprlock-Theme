@@ -1,0 +1,9 @@
+# Heavy assets — distributed via GitHub release, not tracked in git
+assets/backgrounds/
+assets/foreground/
+
+# Release script
+scripts/make-release.sh
+
+# Release build output
+release/
