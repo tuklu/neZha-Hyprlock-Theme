@@ -4,6 +4,10 @@ A minimal, visually layered lock screen theme for [Hyprlock](https://github.com/
 
 ![Preview](assets/screenshot.webp)
 
+```sh
+curl -fsSL https://raw.githubusercontent.com/tuklu/neZha-Hyprlock-Theme/main/install.sh | bash
+```
+
 ---
 
 ## Assets notice
@@ -70,11 +74,26 @@ This will:
    sed "s|./assets/|$THEME/assets/|g" "$THEME/hyprlock.conf" > ~/.config/hypr/hyprlock.conf
    ```
 
-4. *(Optional)* If you are **not** using Omarchy, remove or replace the first line of your new `~/.config/hypr/hyprlock.conf`:
+---
+
+## Omarchy users
+
+The config ships with the `source` line **commented out** and explicit color variables active. To plug into Omarchy's theme system instead:
+
+1. Open `~/.config/hypr/hyprlock.conf`
+2. Uncomment the source line at the top:
    ```
    source = ~/.config/omarchy/current/theme/hyprlock.conf
    ```
-   Replace the `$color`, `$outer_color`, `$inner_color`, and `$font_color` variables with literal `rgba(...)` values from your theme.
+3. Comment out the four variable lines below it:
+   ```
+   # $color       = rgba(216, 222, 233, 0.7)
+   # $inner_color = rgba(255, 255, 255, 0.1)
+   # $outer_color = rgba(255, 255, 255, 0)
+   # $font_color  = rgb(200, 200, 200)
+   ```
+
+Omarchy will then supply the colors. If you want to override a specific variable, leave it uncommented — it will take precedence over the sourced values.
 
 ---
 
