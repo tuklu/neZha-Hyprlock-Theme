@@ -1,107 +1,51 @@
-# neZha — Hyprlock Theme
+# neZha hyprlock theme
 
-A minimal, visually layered lock screen theme for [Hyprlock](https://github.com/hyprwulf/hyprlock), designed to pair with the [neZha SDDM Theme](https://github.com/tuklu/neZha-SDDM-Theme).
+lock screen for [hyprlock](https://github.com/hyprwm/hyprlock). goes with the [neZha sddm theme](https://github.com/tuklu/neZha-SDDM-Theme) so login and lock look the same.
 
-![Preview](assets/screenshot.webp)
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/tuklu/neZha-Hyprlock-Theme/main/install.sh | bash
-```
-
----
-
-## Assets notice
-
-The theme assets (`backgrounds/`, `foreground/`) total ~40 MB and are not in git. They ship as `assets.tar.xz` on the release, which the install script downloads.
-
----
-
-## Features
-
-- Large typographic clock (Steelfish Outline)
-- Day / month / date label
-- Foreground image overlay for depth
-- Password input field with custom placeholder
-- Top-right system status bar: keyboard layout · network · volume · battery
-- All colors in one file, `colors.conf`
-
----
-
-## Dependencies
-
-| Tool | Purpose |
-|------|---------|
-| [hyprlock](https://github.com/hyprwulf/hyprlock) | Lock screen daemon |
-| [hyprctl](https://wiki.hyprland.org/Hypr-Ecosystem/hyprctl/) | Keyboard layout detection |
-| [iwctl](https://iwd.wiki.kernel.org/) | Wi-Fi status |
-| [pamixer](https://github.com/cdemoulins/pamixer) | Volume status |
-| Steelfish Outline font | Clock typeface |
-| SF Pro Display Bold font | UI labels |
-| Nerd Fonts | Status bar icons |
-
----
-
-## Installation
-
-### Recommended — install script (downloads from release)
+![preview](assets/screenshot.webp)
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/tuklu/neZha-Hyprlock-Theme/main/install.sh | bash
 ```
 
-This will:
-- Download and extract the latest `assets.tar.xz` and `source.tar.xz` from the GitHub release
-- Install everything under `~/.config/hypr/neZha-Hyprlock-Theme/`
-- Copy the scripts to `~/.config/hypr/scripts/` and make them executable
-- Write `~/.config/hypr/hyprlock.conf` with correct absolute asset paths
+grabs the latest release into `~/.config/hypr/neZha-Hyprlock-Theme/`, copies the status scripts to `~/.config/hypr/scripts/` and writes `~/.config/hypr/hyprlock.conf`. images are ~40MB so give it a sec.
 
-### Manual setup
+## what you get
 
-1. Clone the repo, then extract `assets.tar.xz` from the latest release into it:
-   ```sh
-   git clone https://github.com/tuklu/neZha-Hyprlock-Theme ~/.config/hypr/neZha-Hyprlock-Theme
-   ```
+- big steelfish clock with the date under it
+- foreground layer over the background for depth
+- password field
+- status bar top right: keyboard layout, wifi, volume, battery
 
-2. Copy the scripts and make them executable:
-   ```sh
-   cp ~/.config/hypr/neZha-Hyprlock-Theme/scripts/*.sh ~/.config/hypr/scripts/
-   chmod +x ~/.config/hypr/scripts/*.sh
-   ```
+## needs
 
-3. Write `hyprlock.conf` with absolute asset and color paths:
-   ```sh
-   THEME=~/.config/hypr/neZha-Hyprlock-Theme
-   sed -e "s|\./assets/|$THEME/assets/|g" -e "s|\./colors.conf|$THEME/colors.conf|" \
-       "$THEME/hyprlock.conf" > ~/.config/hypr/hyprlock.conf
-   ```
+- hyprlock, hyprctl (keyboard layout), iwctl (wifi), pamixer (volume)
+- fonts: steelfish outline, sf pro display bold, any nerd font
 
----
+## manual install
 
-## Colors
+```sh
+git clone https://github.com/tuklu/neZha-Hyprlock-Theme ~/.config/hypr/neZha-Hyprlock-Theme
+cd ~/.config/hypr/neZha-Hyprlock-Theme
+curl -fsSL https://github.com/tuklu/neZha-Hyprlock-Theme/releases/latest/download/assets.tar.xz | tar -xJ
+mkdir -p ~/.config/hypr/scripts && cp scripts/*.sh ~/.config/hypr/scripts/
+sed -e "s|\./assets/|$PWD/assets/|g" -e "s|\./colors.conf|$PWD/colors.conf|" hyprlock.conf > ~/.config/hypr/hyprlock.conf
+```
 
-Every color the lock screen uses is a variable in `colors.conf`, sourced on
-the first line of `hyprlock.conf`. Restyle by editing that file, or point the
-`source` line at a colors file of your own that defines the same variables:
-`$color`, `$clock_color`, `$inner_color`, `$outer_color`, `$font_color`,
-`$check_color`, `$fail_color`, `$status_color`.
+images arent in git, they only ship with the release.
 
----
+## colors
 
-## Releasing
+all of them are in `colors.conf`. edit that, or point the `source` line at your own file with the same vars: `$color` `$clock_color` `$inner_color` `$outer_color` `$font_color` `$check_color` `$fail_color` `$status_color`
 
-Push a version tag (`git tag v1.1.0 && git push origin v1.1.0`) and CI builds
-`source.tar.xz` from the tag and attaches the images from the `assets`
-pre-release. To change the images, upload a new `assets.tar.xz` there with
-`gh release upload assets assets.tar.xz --clobber`.
+## releasing
 
----
+```sh
+git tag v1.1.0 && git push origin v1.1.0
+```
 
-## Related
+ci builds `source.tar.xz` and attaches the images from the `assets` pre-release. new images: `gh release upload assets assets.tar.xz --clobber`
 
-**[neZha SDDM Theme](https://github.com/tuklu/neZha-SDDM-Theme)** — the matching login screen theme for SDDM. Use both for a consistent look from login to lock screen.
+## license
 
----
-
-## License
-
-[MIT](LICENSE) © tuklu
+[MIT](LICENSE)
