@@ -87,6 +87,15 @@ the first line of `hyprlock.conf`. Restyle by editing that file, or point the
 
 ---
 
+## Releasing
+
+Push a version tag (`git tag v1.1.0 && git push origin v1.1.0`) and CI builds
+`source.tar.xz` from the tag and attaches the images from the `assets`
+pre-release. To change the images, upload a new `assets.tar.xz` there with
+`gh release upload assets assets.tar.xz --clobber`.
+
+---
+
 ## Related
 
 **[neZha SDDM Theme](https://github.com/tuklu/neZha-SDDM-Theme)** — the matching login screen theme for SDDM. Use both for a consistent look from login to lock screen.
