@@ -21,7 +21,6 @@ curl -fsSL "$BASE/assets.tar.xz" | tar -xJ -C "$THEME"
 cp "$THEME/scripts/"*.sh "$HYPR/scripts/"
 chmod +x "$HYPR/scripts/"*.sh
 
-sed "s|./assets/|$THEME/assets/|g" "$THEME/hyprlock.conf" > "$HYPR/hyprlock.conf"
+sed -e "s|\./assets/|$THEME/assets/|g" -e "s|\./colors.conf|$THEME/colors.conf|" "$THEME/hyprlock.conf" > "$HYPR/hyprlock.conf"
 
 echo "done. config at $HYPR/hyprlock.conf"
-echo "not on omarchy? drop the first line in that conf"

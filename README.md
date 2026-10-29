@@ -12,7 +12,7 @@ curl -fsSL https://raw.githubusercontent.com/tuklu/neZha-Hyprlock-Theme/main/ins
 
 ## Assets notice
 
-The theme assets (`backgrounds/`, `foreground/`) total ~40 MB. The git repository includes them for convenience, but **if you are cloning just to install, use the [release download](#installation) instead** — the install script pulls only what it needs from the release and is much faster.
+The theme assets (`backgrounds/`, `foreground/`) total ~40 MB and are not in git. They ship as `assets.tar.xz` on the release, which the install script downloads.
 
 ---
 
@@ -23,7 +23,7 @@ The theme assets (`backgrounds/`, `foreground/`) total ~40 MB. The git repositor
 - Foreground image overlay for depth
 - Password input field with custom placeholder
 - Top-right system status bar: keyboard layout · network · volume · battery
-- Integrates with [Omarchy](https://github.com/basecamp/omarchy) theme system
+- All colors in one file, `colors.conf`
 
 ---
 
@@ -57,7 +57,7 @@ This will:
 
 ### Manual setup
 
-1. Clone the repo (includes all assets, ~40 MB):
+1. Clone the repo, then extract `assets.tar.xz` from the latest release into it:
    ```sh
    git clone https://github.com/tuklu/neZha-Hyprlock-Theme ~/.config/hypr/neZha-Hyprlock-Theme
    ```
@@ -68,32 +68,22 @@ This will:
    chmod +x ~/.config/hypr/scripts/*.sh
    ```
 
-3. Write `hyprlock.conf` with absolute asset paths:
+3. Write `hyprlock.conf` with absolute asset and color paths:
    ```sh
    THEME=~/.config/hypr/neZha-Hyprlock-Theme
-   sed "s|./assets/|$THEME/assets/|g" "$THEME/hyprlock.conf" > ~/.config/hypr/hyprlock.conf
+   sed -e "s|\./assets/|$THEME/assets/|g" -e "s|\./colors.conf|$THEME/colors.conf|" \
+       "$THEME/hyprlock.conf" > ~/.config/hypr/hyprlock.conf
    ```
 
 ---
 
-## Omarchy users
+## Colors
 
-The config ships with the `source` line **commented out** and explicit color variables active. To plug into Omarchy's theme system instead:
-
-1. Open `~/.config/hypr/hyprlock.conf`
-2. Uncomment the source line at the top:
-   ```
-   source = ~/.config/omarchy/current/theme/hyprlock.conf
-   ```
-3. Comment out the four variable lines below it:
-   ```
-   # $color       = rgba(216, 222, 233, 0.7)
-   # $inner_color = rgba(255, 255, 255, 0.1)
-   # $outer_color = rgba(255, 255, 255, 0)
-   # $font_color  = rgb(200, 200, 200)
-   ```
-
-Omarchy will then supply the colors. If you want to override a specific variable, leave it uncommented — it will take precedence over the sourced values.
+Every color the lock screen uses is a variable in `colors.conf`, sourced on
+the first line of `hyprlock.conf`. Restyle by editing that file, or point the
+`source` line at a colors file of your own that defines the same variables:
+`$color`, `$clock_color`, `$inner_color`, `$outer_color`, `$font_color`,
+`$check_color`, `$fail_color`, `$status_color`.
 
 ---
 
